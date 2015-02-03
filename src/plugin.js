@@ -69,26 +69,27 @@
 			}
 		}
 	};
+
   $.handlebarsPreload = function (templateName) {
 		var url = resolveTemplatePath(templateName);
 		if (!cache.hasOwnProperty(url)) {
 			var $this = this;
 			$.get(url, function (template) {
 				cache[url] = Handlebars.compile(template);
-				$this.html(cache[url](data)).trigger('render.handlebars', [templateName, data]);
-			}, 'text');
     }
   };
 
-	$.fn.render = function (templateName, data) {
+	$.fn.render = function (templateName, data, callback) {
 		var url = resolveTemplatePath(templateName);
 		if (cache.hasOwnProperty(url)) {
 			this.html(cache[url](data)).trigger('render.handlebars', [templateName, data]);
+      callback();
 		} else {
 			var $this = this;
 			$.get(url, function (template) {
 				cache[url] = Handlebars.compile(template);
 				$this.html(cache[url](data)).trigger('render.handlebars', [templateName, data]);
+        callback();
 			}, 'text');
 		}
 		return this;
