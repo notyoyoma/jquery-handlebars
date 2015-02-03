@@ -84,13 +84,13 @@
 		var url = resolveTemplatePath(templateName);
 		if (cache.hasOwnProperty(url)) {
 			this.html(cache[url](data)).trigger('render.handlebars', [templateName, data]);
-      callback();
+      if (callback) callback();
 		} else {
 			var $this = this;
 			$.get(url, function (template) {
 				cache[url] = Handlebars.compile(template);
 				$this.html(cache[url](data)).trigger('render.handlebars', [templateName, data]);
-        callback();
+        if (callback) callback();
 			}, 'text');
 		}
 		return this;
