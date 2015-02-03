@@ -76,6 +76,7 @@
 			var $this = this;
 			$.get(url, function (template) {
 				cache[url] = Handlebars.compile(template);
+      });
     }
   };
 
